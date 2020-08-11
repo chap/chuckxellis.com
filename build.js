@@ -35,7 +35,7 @@ function downloadFiles() {
     //     console.log(files[i])
     //     { break } if (i == 1)
 
-        dbx.filesDownloadZip({ path: '/chuckxellis.com/' })
+        dbx.filesDownloadZip({ path: "/chuckxellis.com/" })
             .then(function (data) {
             // NOTE: The Dropbox SDK specification does not include a fileBlob
             // field on the FileLinkMetadataReference type, so it is missing from
