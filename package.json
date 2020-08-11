@@ -14,9 +14,14 @@
     "test": "echo \"Write tests! -> https://gatsby.dev/unit-testing\" && exit 1"
   },
   "dependencies": {
+    "dotenv": "8.2.0",
+    "dropbox": "5.2.1",
     "gatsby": "^2.24.37",
+    "node-fetch": "2.6.0",
     "react": "^16.12.0",
-    "react-dom": "^16.12.0"
+    "react-dom": "^16.12.0",
+    "request": "2.88.2",
+    "unzipper": "0.10.11"
   },
   "devDependencies": {
     "prettier": "2.0.5"
