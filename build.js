@@ -47,7 +47,7 @@ function downloadFiles(dbx) {
 
 
                 console.log('reading root')
-                root = fs.readdirSync( '')
+                root = fs.readdirSync( './')
                 console.log('root=')
                 console.log(root)
 
