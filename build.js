@@ -29,10 +29,23 @@ function downloadFiles(dbx) {
                     throw err; 
                 }
                 console.log('File saved.');
+
+                var stats = fs.statSync("images.zip")
+
+                console.log("images.zip=")
+                console.log(stats)
+                //Convert the file size to megabytes (optional)
+                var fileSizeInMegabytes = fileSizeInBytes / 1000000.0
+                console.log(fileSizeInMegabytes)
+                
+
+
                 fs.createReadStream('images.zip')
                 .pipe(unzipper.Extract({ path: 'static/' }))
                 // unzip doesn't remove inclosing folder
                 console.log('File: ' + 'images.zip' + ' unzi!pped.');
+
+                var stats = fs.statSync("myfile.txt")
                 
                 console.log('reading dir')
                 filenames = fs.readdirSync( 'static/chuckxellis-website-images/')
