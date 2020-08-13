@@ -59,6 +59,9 @@ function downloadFiles(dbx) {
                     json.push(image)
                 } 
 
+                console.log('json.length=')
+                console.log(json.length)
+
                 let data = JSON.stringify(json);
                 fs.writeFileSync('static/images.json', data);
                 console.log('write images.json')
