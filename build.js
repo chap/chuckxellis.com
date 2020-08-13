@@ -45,6 +45,12 @@ function downloadFiles(dbx) {
                 // unzip doesn't remove inclosing folder
                 console.log('File: ' + 'images.zip' + ' unzi!pped.');
 
+
+                console.log('reading root')
+                root = fs.readdirSync( '')
+                console.log('root=')
+                console.log(root)
+
                 
                 console.log('reading dir')
                 static = fs.readdirSync( 'static')
