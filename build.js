@@ -47,7 +47,7 @@ function downloadFiles(dbx) {
 
                 
                 console.log('reading dir')
-                filenames = fs.readdirSync( 'static')
+                static = fs.readdirSync( 'static')
                 console.log('static=')
                 console.log(static)
 
