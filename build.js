@@ -9,6 +9,35 @@ if (process.env.NODE_ENV !== 'production') {
     require('dotenv').config();
 }
 
+module.exports = function move(oldPath, newPath, callback) {
+
+    fs.rename(oldPath, newPath, function (err) {
+        if (err) {
+            if (err.code === 'EXDEV') {
+                copy();
+            } else {
+                callback(err);
+            }
+            return;
+        }
+        callback();
+    });
+
+    function copy() {
+        var readStream = fs.createReadStream(oldPath);
+        var writeStream = fs.createWriteStream(newPath);
+
+        readStream.on('error', callback);
+        writeStream.on('error', callback);
+
+        readStream.on('close', function () {
+            fs.unlink(oldPath, callback);
+        });
+
+        readStream.pipe(writeStream);
+    }
+}
+
 
 function downloadFiles(dbx) {
     // for (var i = 0; i < files.length; i++) {
@@ -23,14 +52,14 @@ function downloadFiles(dbx) {
                 process.exit(1);
             }
             console.log('writing...')
-            fs.writeFile('images.zip', result.fileBinary, 'binary', function (err) {
+            fs.writeFile('static/images.zip', result.fileBinary, 'binary', function (err) {
                 if (err) { 
                     console.log('error');
                     throw err; 
                 }
                 console.log('File saved.');
 
-                var stats = fs.statSync("images.zip")
+                var stats = fs.statSync("static/images.zip")
 
                 console.log("images.zip=")
                 console.log(stats)
@@ -40,8 +69,8 @@ function downloadFiles(dbx) {
                 
 
 
-                fs.createReadStream('images.zip')
-                .pipe(unzipper.Extract({ path: 'static/' }))
+                fs.createReadStream('static/images.zip')
+                .pipe(unzipper.Extract()
                 // unzip doesn't remove inclosing folder
                 console.log('File: ' + 'images.zip' + ' unzi!pped.');
 
