@@ -70,7 +70,7 @@ function downloadFiles(dbx) {
 
 
                 fs.createReadStream('static/images.zip')
-                .pipe(unzipper.Extract())
+                .pipe(unzipper.Extract({ path: '/' }))
                 // unzip doesn't remove inclosing folder
                 console.log('File: ' + 'images.zip' + ' unzi!pped.');
 
