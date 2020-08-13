@@ -47,6 +47,10 @@ function downloadFiles(dbx) {
 
                 
                 console.log('reading dir')
+                filenames = fs.readdirSync( 'static')
+                console.log('static=')
+                console.log(static)
+
                 filenames = fs.readdirSync( 'static/chuckxellis-website-images')
                 console.log('filenames=')
                 console.log(filenames)
