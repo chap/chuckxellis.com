@@ -35,7 +35,7 @@ function downloadFiles(dbx) {
                 console.log("images.zip=")
                 console.log(stats)
                 //Convert the file size to megabytes (optional)
-                var fileSizeInMegabytes = fileSizeInBytes / 1000000.0
+                var fileSizeInMegabytes = stats['size'] / 1000000.0
                 console.log(fileSizeInMegabytes)
                 
 
@@ -45,10 +45,11 @@ function downloadFiles(dbx) {
                 // unzip doesn't remove inclosing folder
                 console.log('File: ' + 'images.zip' + ' unzi!pped.');
 
-                var stats = fs.statSync("myfile.txt")
                 
                 console.log('reading dir')
-                filenames = fs.readdirSync( 'static/chuckxellis-website-images/')
+                filenames = fs.readdirSync( 'static/chuckxellis-website-images')
+                console.log('filenames=')
+                console.log(filenames)
                 var json = []
                 for (let filename of filenames) { 
                     if(filename == '.keep') {
