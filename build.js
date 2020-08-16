@@ -131,10 +131,14 @@ function downloadFiles(dbx) {
                 fs.createReadStream('static/images.zip')
                 .pipe(unzipper.Parse())
                 .on('entry', function (entry) {
-                    console.log('zip entry=')
-                    console.log(entry)
+                    // console.log('zip entry=')
+                    // console.log(entry)
                     const fileName = entry.path;
                     const type = entry.type; // 'Directory' or 'File'
+                    if(type == 'Directory') {
+                        continue;
+                        // entry.autodrain
+                    }
                     const size = entry.vars.uncompressedSize; // There is also compressedSize;
 
                     const filePath = 'static/images/' + fileName
