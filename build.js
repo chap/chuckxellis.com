@@ -146,6 +146,7 @@ function downloadFiles(dbx) {
                         title: title
                     }
                     console.log('imageJson=')
+                    console.log(imageJson)
                     json.push(imageJson)
 
                     if (fileName === "this IS the file I'm looking for") {
@@ -154,14 +155,19 @@ function downloadFiles(dbx) {
                     } else {
                         entry.autodrain();
                     }
+                })
+                .on('close', function(){ 
+                    console.log('json.length=')
+                    console.log(json.length)
+
+                    let data = JSON.stringify(json);
+                    fs.writeFileSync('static/images.json', data);
+                    console.log('write static/images.json')
                 });
 
-                console.log('json.length=')
-                console.log(json.length)
 
-                let data = JSON.stringify(json);
-                fs.writeFileSync('static/images.json', data);
-                console.log('write static/images.json')
+
+
             
             });
 
