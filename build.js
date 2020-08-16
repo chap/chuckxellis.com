@@ -136,7 +136,7 @@ function downloadFiles(dbx) {
                     const fileName = entry.path;
                     const type = entry.type; // 'Directory' or 'File'
                     if(type == 'Directory') {
-                        entry.autodrain
+                        entry.autodrain();
                         return false;
                     }
                     const size = entry.vars.uncompressedSize; // There is also compressedSize;
@@ -153,12 +153,12 @@ function downloadFiles(dbx) {
                     console.log(imageJson)
                     json.push(imageJson)
 
-                    if (fileName === "this IS the file I'm looking for") {
+                    // if (fileName === "this IS the file I'm looking for") {
                         entry.pipe(fs.createWriteStream(filePath));
                         console.log('piped to file='+filePath)
-                    } else {
-                        entry.autodrain();
-                    }
+                    // } else {
+                    //     entry.autodrain();
+                    // }
                 })
                 .on('close', function(){ 
                     console.log('json.length=')
