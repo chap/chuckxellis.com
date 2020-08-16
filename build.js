@@ -136,8 +136,8 @@ function downloadFiles(dbx) {
                     const fileName = entry.path;
                     const type = entry.type; // 'Directory' or 'File'
                     if(type == 'Directory') {
-                        continue;
                         entry.autodrain
+                        return false;
                     }
                     const size = entry.vars.uncompressedSize; // There is also compressedSize;
 
