@@ -69,8 +69,21 @@ function downloadFiles(dbx) {
                 
 
 
-                fs.createReadStream('static/images.zip')
-                .pipe(unzipper.Extract({ path: '/static/chuckxellis-website-images' }))
+                // fs.createReadStream('static/images.zip')
+                // .pipe(unzipper.Extract({ path: '/static' }))
+
+
+                
+                // console.log('json.length=')
+                // console.log(json.length)
+
+                // let data = JSON.stringify(json);
+                // fs.writeFileSync('static/images.json', data);
+                // console.log('write images.json')
+
+
+                //   }
+
                 // unzip doesn't remove inclosing folder
                 console.log('File: ' + 'images.zip' + ' unzi!pped.');
 
@@ -81,43 +94,72 @@ function downloadFiles(dbx) {
                 console.log(root)
 
                 
-                console.log('reading dir')
+                console.log('reading static dir')
                 static = fs.readdirSync( 'static')
                 console.log('static=')
                 console.log(static)
 
-                filenames = fs.readdirSync( 'static/chuckxellis-website-images')
-                console.log('filenames=')
-                console.log(filenames)
+                // filenames = fs.readdirSync( 'static/chuckxellis-website-images')
+                // console.log('filenames=')
+                // console.log(filenames)
+                // var json = []
+                // const zip = fs.createReadStream('static/images.zip').pipe(unzipper.Parse({forceStream: true}));
+                // console.log('zip=')
+                // console.log(zip
+                // for await (let filename of zip) {
+                //     if(filename == '.keep') {
+                //         filename.autodrain();
+                //         continue;
+                //     }
+                //     console.log(filename) 
+
+
+                //     // var pattern = /^[[0-9]*]/;
+                //     // var reg = new RegExp('^-\\d+$');
+                //     // var number = pattern.exec(title);
+                //     // console.log('number='+number)
+
+                //     let image = {
+                //         path: fromPath,
+                //         title: title
+                //     }
+                
+                //     json.push(image)
+                // } 
+
                 var json = []
-                for (let filename of filenames) { 
-                    if(filename == '.keep') {
-                        continue;
-                    }
-                    console.log(filename) 
-                    fromPath = 'static/chuckxellis-website-images/' + filename
-                    extension = path.extname(filename)
-                    title = path.basename(fromPath, extension)
+                fs.createReadStream('static/images.zip')
+                .pipe(unzipper.Parse())
+                .on('entry', function (entry) {
+                    const fileName = entry.path;
+                    const type = entry.type; // 'Directory' or 'File'
+                    const size = entry.vars.uncompressedSize; // There is also compressedSize;
 
-                    // var pattern = /^[[0-9]*]/;
-                    // var reg = new RegExp('^-\\d+$');
-                    // var number = pattern.exec(title);
-                    // console.log('number='+number)
+                    const filePath = 'static/images/' + fileName
+                    const fileExtension = path.extname(fileName)
+                    const title = path.basename(filePath, fileExtension)
 
-                    let image = {
-                        path: fromPath,
+                    let imageJson = {
+                        path: filePath,
                         title: title
                     }
-                
-                    json.push(image)
-                } 
+                    console.log('imageJson=')
+                    json.push(imageJson)
+
+                    if (fileName === "this IS the file I'm looking for") {
+                        entry.pipe(fs.createWriteStream(filePath));
+                        console.log('piped to file='+filePath)
+                    } else {
+                        entry.autodrain();
+                    }
+                });
 
                 console.log('json.length=')
                 console.log(json.length)
 
                 let data = JSON.stringify(json);
                 fs.writeFileSync('static/images.json', data);
-                console.log('write images.json')
+                console.log('write static/images.json')
             
             });
 
