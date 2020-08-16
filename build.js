@@ -85,7 +85,7 @@ function downloadFiles(dbx) {
                 //   }
 
                 // unzip doesn't remove inclosing folder
-                console.log('File: ' + 'images.zip' + ' unzi!pped.');
+                // console.log('File: ' + 'images.zip' + ' unzi!pped.');
 
 
                 console.log('reading root')
@@ -131,6 +131,8 @@ function downloadFiles(dbx) {
                 fs.createReadStream('static/images.zip')
                 .pipe(unzipper.Parse())
                 .on('entry', function (entry) {
+                    console.log('zip entry=')
+                    console.log(entry)
                     const fileName = entry.path;
                     const type = entry.type; // 'Directory' or 'File'
                     const size = entry.vars.uncompressedSize; // There is also compressedSize;
