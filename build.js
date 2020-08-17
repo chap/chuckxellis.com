@@ -53,9 +53,9 @@ function downloadFiles(dbx) {
             }
             console.log('writing...')
             fs.writeFile('static/images.zip', result.fileBinary, 'binary', function (err) {
-                if (err) { 
+                if (err) {
                     console.log('error');
-                    throw err; 
+                    throw err;
                 }
                 console.log('File saved.');
 
@@ -66,14 +66,14 @@ function downloadFiles(dbx) {
                 //Convert the file size to megabytes (optional)
                 var fileSizeInMegabytes = stats['size'] / 1000000.0
                 console.log(fileSizeInMegabytes)
-                
+
 
 
                 // fs.createReadStream('static/images.zip')
                 // .pipe(unzipper.Extract({ path: '/static' }))
 
 
-                
+
                 // console.log('json.length=')
                 // console.log(json.length)
 
@@ -93,7 +93,7 @@ function downloadFiles(dbx) {
                 console.log('root=')
                 console.log(root)
 
-                
+
                 console.log('reading static dir')
                 static = fs.readdirSync( 'static')
                 console.log('static=')
@@ -111,7 +111,7 @@ function downloadFiles(dbx) {
                 //         filename.autodrain();
                 //         continue;
                 //     }
-                //     console.log(filename) 
+                //     console.log(filename)
 
 
                 //     // var pattern = /^[[0-9]*]/;
@@ -123,9 +123,9 @@ function downloadFiles(dbx) {
                 //         path: fromPath,
                 //         title: title
                 //     }
-                
+
                 //     json.push(image)
-                // } 
+                // }
 
                 var json = []
                 fs.createReadStream('static/images.zip')
@@ -143,11 +143,24 @@ function downloadFiles(dbx) {
 
                     const filePath = __dirname + '/static/' + fileName
                     const fileExtension = path.extname(fileName)
-                    const title = path.basename(filePath, fileExtension)
+                    var title = path.basename(filePath, fileExtension)
+
+                    var positionString = title.match(/[[0-9]*] /i);
+                    if(positionString) {
+                      positionString = orderString[0];
+                      title = title.replace(positionString,'');
+
+                      positionNumber = positionString.replace("[",'');
+                      positionNumber = positionNumber.replace("]",'');
+                      positionNumber = parseInt(positionNumber);
+                    } else {
+                      positionString = 1000
+                    }
 
                     let imageJson = {
                         path: fileName,
-                        title: title
+                        title: title,
+                        position: positionNumber
                     }
                     console.log('imageJson=')
                     console.log(imageJson)
@@ -160,9 +173,13 @@ function downloadFiles(dbx) {
                     //     entry.autodrain();
                     // }
                 })
-                .on('close', function(){ 
+                .on('close', function(){
                     console.log('json.length=')
                     console.log(json.length)
+
+                    json.sort(function(a, b) {
+                      return a.position - b.position;
+                    });
 
                     let data = JSON.stringify(json);
                     fs.writeFileSync('static/images.json', data);
@@ -172,13 +189,13 @@ function downloadFiles(dbx) {
 
 
 
-            
+
             });
 
-            // If promise is rejected 
-            // .catch(err => { 
-            //     console.log(err) 
-            // }) 
+            // If promise is rejected
+            // .catch(err => {
+            //     console.log(err)
+            // })
 
 
         })
@@ -192,8 +209,8 @@ function downloadFiles(dbx) {
 
 
 
-var dbx = new Dropbox.Dropbox({ accessToken: process.env.DROPBOX_ACCESS_TOKEN, 
-    clientId: process.env.DROPBOX_CLIENT_ID, 
+var dbx = new Dropbox.Dropbox({ accessToken: process.env.DROPBOX_ACCESS_TOKEN,
+    clientId: process.env.DROPBOX_CLIENT_ID,
 clientSecret: process.env.DROPBOX_CLIENT_SECRET,
        fetch: require("node-fetch") });
 downloadFiles(dbx)
@@ -201,6 +218,3 @@ downloadFiles(dbx)
 
 
 // Get the files as an array
-
-
-
