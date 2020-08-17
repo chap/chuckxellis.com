@@ -68,6 +68,24 @@
         <script type="text/javascript" src="imageMapResizer.min.js"></script>
         <script type="text/javascript">
             imageMapResize();
+
+            IMAGES = []
+            IMAGE_INDEX = 0
+            var xhr = new XMLHttpRequest();
+            xhr.open('GET', 'https://chuckxellis.com/images.json', true);
+            xhr.responseType = 'json';
+            xhr.onload = function() {
+                var status = xhr.status;
+                if (status === 200) {
+                    IMAGES = xhr.response
+                    console.log('IMAGES=')
+                    console.log(IMAGES)
+                } else {
+                    console.log('error loading image json');
+                    console.log(xhr.response);
+                }
+            };
+            xhr.send();
         </script>
     </body>
 </html>
