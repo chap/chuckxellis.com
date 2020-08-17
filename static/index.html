@@ -28,14 +28,14 @@
                 margin: 0 auto;
                 width:100%;
             }
-            .gallery {
+            #gallery-image {
                 display: block;
                 width:50%;
                 margin: 0 auto;
                 margin-top: -50%;
                 padding-bottom: 2rem;
             }
-            .title {
+            #image-title {
                 text-align: center;
                 padding-bottom: 4rem;
             }
@@ -50,8 +50,8 @@
         <map name="image-map">
             <area target="" alt="Music" title="Music" href="/music" coords="328,119,16,213" shape="rect">
             <area target="" alt="Store" title="Store" href="/store" coords="22,230,313,294,226,154" shape="0">
-            <area target="" alt="Previous" title="Previous" href="/previous-image" coords="284,1489,112,1323" shape="0">
-            <area target="" alt="Next" title="Next" href="/next-image" coords="2867,1411,2724,1262" shape="0">
+            <area target="" alt="Previous" title="Previous" href="" coords="284,1489,112,1323" shape="0" onClick="previousImage(); return false">
+            <area target="" alt="Next" title="Next" href="" coords="2867,1411,2724,1262" shape="0" onClick="nextImage(); return false">
             <area target="" alt="Soundcloud" title="Soundcloud" href="https://soundcloud.com/chuckellis" coords="1238,399,1305,455" shape="0">
             <area target="" alt="Instagram" title="Instagram" href="https://www.instagram.com/chuckxellis/" coords="1334,382,1427,458" shape="0">
             <area target="" alt="Twitter" title="Twitter" href="https://twitter.com/chuckxellis" coords="1471,379,1564,455" shape="0">
@@ -61,13 +61,29 @@
             <area target="" alt="Twitter" title="Twitter" href="https://twitter.com/rulersmusic/" coords="1587,597,1675,664" shape="0">
         </map>
 
-        <img src="chuckxellis-website-images/0.png" class="gallery" >
-        <p class="title">0</p>
+        <img src="" id="gallery-image" >
+        <p id="image-title"></p>
 
 
         <script type="text/javascript" src="imageMapResizer.min.js"></script>
         <script type="text/javascript">
             imageMapResize();
+
+
+            function showImage() {
+              document.getElementById("gallery-image").src = IMAGES[IMAGE_INDEX].path;
+              document.getElementById("image-title").innerHTML = IMAGES[IMAGE_INDEX].title;
+            }
+
+            function nextImage() {
+                IMAGE_INDEX += 1
+                showImage()
+            }
+
+            function previousImage() {
+                IMAGE_INDEX -= 1
+                showImage()
+            }
 
             IMAGES = []
             IMAGE_INDEX = 0
@@ -78,8 +94,7 @@
                 var status = xhr.status;
                 if (status === 200) {
                     IMAGES = xhr.response
-                    console.log('IMAGES=')
-                    console.log(IMAGES)
+                    showImage()
                 } else {
                     console.log('error loading image json');
                     console.log(xhr.response);
