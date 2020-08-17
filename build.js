@@ -141,7 +141,7 @@ function downloadFiles(dbx) {
                     }
                     const size = entry.vars.uncompressedSize; // There is also compressedSize;
 
-                    const filePath = 'static/images/' + fileName
+                    const filePath = '/static/' + fileName
                     const fileExtension = path.extname(fileName)
                     const title = path.basename(filePath, fileExtension)
 
