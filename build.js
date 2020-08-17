@@ -154,7 +154,7 @@ function downloadFiles(dbx) {
                       positionNumber = positionNumber.replace("]",'');
                       positionNumber = parseInt(positionNumber);
                     } else {
-                      positionString = 1000
+                      positionNumber = 1000
                     }
 
                     let imageJson = {
