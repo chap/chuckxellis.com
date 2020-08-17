@@ -71,8 +71,13 @@
 
 
             function showImage() {
-              document.getElementById("gallery-image").src = IMAGES[IMAGE_INDEX].path;
-              document.getElementById("image-title").innerHTML = IMAGES[IMAGE_INDEX].title;
+                i = IMAGE_INDEX
+                if(i <0) {
+                    i = IMAGES.length + IMAGE_INDEX
+                }
+              document.getElementById("gallery-image").src = "";
+              document.getElementById("gallery-image").src = IMAGES[i].path;
+              document.getElementById("image-title").innerHTML = IMAGES[i].title;
             }
 
             function nextImage() {
