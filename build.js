@@ -147,7 +147,7 @@ function downloadFiles(dbx) {
 
                     var positionString = title.match(/[[0-9]*] /i);
                     if(positionString) {
-                      positionString = orderString[0];
+                      positionString = positionString[0];
                       title = title.replace(positionString,'');
 
                       positionNumber = positionString.replace("[",'');
