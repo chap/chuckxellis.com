@@ -141,12 +141,12 @@ function downloadFiles(dbx) {
                     }
                     const size = entry.vars.uncompressedSize; // There is also compressedSize;
 
-                    const filePath = '/static/' + fileName
+                    const filePath = __dirname + '/static/' + fileName
                     const fileExtension = path.extname(fileName)
                     const title = path.basename(filePath, fileExtension)
 
                     let imageJson = {
-                        path: filePath,
+                        path: fileName,
                         title: title
                     }
                     console.log('imageJson=')
